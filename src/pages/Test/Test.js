@@ -2,13 +2,15 @@ import React, {useEffect, useState} from "react";
 
 import Task from "../../components/Task";
 import {useParams} from "react-router";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getTest, checkTest} from "../../actions/getTest";
 import TestResultTable from "../../components/TestResultTable";
 import validateInput from "../../shared/validations/test";
 import TimerCard from "../../components/TimerCard";
+import countCompleteTask from "../../util/test/countCompleteTask"
 
 import './Test.scss'
+import {addStat} from "../../actions/addStatTest";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -18,37 +20,60 @@ const Test = () => {
     const [answers, setAnswers] = useState({});
     const [result, setResult] = useState(null);
     const [errors, setErrors] = useState({});
-    const [viewResult, setViewResult] = useState({});
+    const [duration, setDuration] = useState(0);
+    const [quantityTasks, setQuantityTasks] = useState(null);
+    const [completeTasks, setCompleteTasks] = useState(0);
+    const [stop, setStop] = useState(false);
+    const [initial_time, setInitial_time] = useState(-1);
+    const id_user = useSelector(state => state.auth.user.id);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getTest(id_test)).then(res => {
-            console.log(res.data);
             setTasks(res.data.problems);
+            setDuration(res.data.duration);
+            setQuantityTasks(res.data.problems.split('|').length);
             res.data.problems.split("|").map((id) => answers["answer_" + id] = '');
-        })
+        });
     }, []);
+
+    useEffect(() => {
+        dispatch(addStat(id_user, id_test, answers)).then(res => {
+            setInitial_time(res.data.second_passed)
+            /*setTasks(res.data.problems);
+            setDuration(res.data.duration);
+            setQuantityTasks(res.data.problems.split('|').length);
+            res.data.problems.split("|").map((id) => answers["answer_" + id] = '');*/
+        });
+    }, []);
+
+    useEffect(() => {
+        if (stop === true) {
+            handleSubmit(new Event("click"));
+        }
+    }, [stop]);
 
 
     const handleSubmit = e => {
-        e.preventDefault();
-        /*await sleep(500);
-        alert(JSON.stringify({answers}, null,2));*/
-        if (isValid()) {
-            dispatch(checkTest(answers)).then(res => {
-                console.log('отправил ответы');
-                setResult(res.data);
-                console.log(res.data, 'result python')
-            })
+        if (!result) {
+            e.preventDefault();
+            if (stop || isValid()) {
+                dispatch(checkTest(answers)).then(res => {
+                    console.log('отправил ответы');
+                    setResult(res.data);
+                    console.log(res.data, 'result python')
+                })
+            }
         }
     };
 
     const handleChangeAnswer = e => {
-        if (!result) {
+        if (!result && !stop) {
             answers[e.target.name] = e.target.value;
             setAnswers(answers => ({...answers, ...answers}));
         }
+        setCompleteTasks(countCompleteTask(answers));
     };
 
     const isValid = () => {
@@ -61,6 +86,10 @@ const Test = () => {
         }
 
         return isValid;
+    };
+
+    const stopTest = () => {
+        setStop(true);
     };
 
 
@@ -80,14 +109,16 @@ const Test = () => {
                               viewResult={result && result[id]}
                         />
                     )}
-
+                    {result !== null && <TestResultTable resultTest={result} answers={answers}/>}
                 </div>
                 <div className={"PageLayout-Right"}>
-                    <TimerCard durationTimer={3600} completeTasks={0} quantityTasks={3}/>
+                    <TimerCard initial_time={initial_time} durationTimer={duration} completeTasks={completeTasks}
+                               quantityTasks={quantityTasks}
+                               handleSubmit={handleSubmit} result_test={result}
+                               stopVoid={stopTest}/>
                 </div>
-                {result === null &&
-                <button type="submit" onClick={handleSubmit} className="btn btn-primary">Проверить</button>}
-                {result !== null && <TestResultTable resultTest={result} answers={answers}/>}
+                {/*{result === null &&
+                <button type="submit" onClick={handleSubmit} className="btn btn-primary">Проверить</button>}*/}
             </div>
 
         </div>

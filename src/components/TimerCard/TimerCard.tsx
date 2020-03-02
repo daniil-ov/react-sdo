@@ -5,54 +5,61 @@ import './TimerCard.scss'
 type TimerCard = {
     durationTimer: number,
     completeTasks: number,
-    quantityTasks: number
+    quantityTasks: number,
+    handleSubmit: any,
+    stopVoid: any,
+    result_test: object,
+    initial_time: number
 }
 
-const TimerCard: FC<TimerCard> = ({durationTimer, completeTasks, quantityTasks}) => {
+const TimerCard: FC<TimerCard> = ({initial_time, durationTimer, completeTasks, quantityTasks, handleSubmit, result_test, stopVoid}) => {
 
-    const [currentTime, setCurrentTime] = useState(0);
+    const [init_time, setInit_time] = useState(initial_time);
+    const [currentTime, setCurrentTime] = useState(initial_time);
+    const [stopWatch, setStopWatch] = useState('00:00:00');
     const [timer, setTimer] = useState('00:00:00');
-    const [backTimer, setBackTimer] = useState('00:00:00');
-    const [sec, setSec] = useState('00');
-    const [min, setMin] = useState('00');
-    const [hour, setHour] = useState('00');
-    let initialTime = 0;
-    /*let seconds = 0;
-    let minutes = 0;
-    let hours = 0;*/
+    const [duration_test, setDuration_test] = useState(durationTimer);
+    let initialTime = init_time;
 
+    useEffect(() => {
+        setInit_time(initial_time);
+        setCurrentTime(initial_time);
+    }, [initial_time]);
 
+    useEffect(() => {
+        setDuration_test(durationTimer);
+    }, [durationTimer]);
 
+    useEffect(() => {
+        if (durationTimer !== 0 && initialTime !== -1) {
+            setInterval(tick, 1000);
+        }
+    }, [duration_test, initial_time]);
 
     function tick() {
         initialTime++;
         setCurrentTime(initialTime);
 
-        let seconds = initialTime % 60;
-        let minutes = parseInt(String(initialTime / 60));
-        let hours = parseInt(String(initialTime / 3600));
+        setStopWatch(viewTime(initialTime));
+        setTimer(viewTime(duration_test - initialTime));
 
-        setTimer(viewTime(initialTime));
-        setBackTimer(viewTime(durationTimer - initialTime));
+        if (initialTime >= duration_test) {
+            stopVoid();
+            setStopWatch(viewTime(duration_test));
+            setTimer("Время истекло");
+        }
     }
 
-
-    function viewTime(t: number){
+    function viewTime(t: number) {
         let sec = String(t % 60);
         let min = String(parseInt(String(t / 60)));
         let hour = String(parseInt(String(t / 3600)));
-        if (String(sec).length == 1) sec = '0' + sec;
-        if (String(min).length == 1) min = '0' + min;
-        if (String(hour).length == 1) hour = '0' + hour;
+        if (String(sec).length === 1) sec = '0' + sec;
+        if (String(min).length === 1) min = '0' + min;
+        if (String(hour).length === 1) hour = '0' + hour;
 
         return hour + ':' + min + ':' + sec;
     }
-
-
-    useEffect(() => {
-        setInterval(tick, 1000);
-    }, []);
-
 
 
     return (
@@ -60,14 +67,17 @@ const TimerCard: FC<TimerCard> = ({durationTimer, completeTasks, quantityTasks})
             <div className={"Card"}>
                 <div className={"TimerCard-Content"}>
                     <div className={"TimerClock-Time"}>
-                        {backTimer}
+                        {timer}
                     </div>
 
                     <div className={"TimerClock-TestInfo"}>
                         <span>Выполнено заданий: {completeTasks} из {quantityTasks}</span>
                         <br/>
-                        <span>Времени прошло: {timer}</span>
+                        <span>Времени прошло: {stopWatch}</span>
                     </div>
+                    <br/>
+                    <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-block">Проверить
+                    </button>
 
                 </div>
 
