@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getTest, checkTest} from "../../actions/getTest";
 import TestResultTable from "../../components/TestResultTable";
 import validateInput from "../../shared/validations/test";
-import TimerCard from "../../components/TimerCard";
+import TimerCard2 from "../../components/TimerCard";
 import countCompleteTask from "../../util/test/countCompleteTask"
 
 import './Test.scss'
@@ -40,13 +40,15 @@ const Test = () => {
 
     useEffect(() => {
         dispatch(addStat(id_user, id_test, answers)).then(res => {
-            setInitial_time(res.data.second_passed)
+            setInitial_time(res.data.second_passed);
+            //setAnswers(JSON.parse(res.data.answers));
+            console.log(res.data.answers, 'answers')
             /*setTasks(res.data.problems);
             setDuration(res.data.duration);
             setQuantityTasks(res.data.problems.split('|').length);
             res.data.problems.split("|").map((id) => answers["answer_" + id] = '');*/
         });
-    }, []);
+    }, [answers]);
 
     useEffect(() => {
         if (stop === true) {
@@ -59,7 +61,7 @@ const Test = () => {
         if (!result) {
             e.preventDefault();
             if (stop || isValid()) {
-                dispatch(checkTest(answers)).then(res => {
+                dispatch(checkTest(id_user, id_test, answers)).then(res => {
                     console.log('отправил ответы');
                     setResult(res.data);
                     console.log(res.data, 'result python')
@@ -112,7 +114,7 @@ const Test = () => {
                     {result !== null && <TestResultTable resultTest={result} answers={answers}/>}
                 </div>
                 <div className={"PageLayout-Right"}>
-                    <TimerCard initial_time={initial_time} durationTimer={duration} completeTasks={completeTasks}
+                    <TimerCard2 initial_time={initial_time} durationTimer={duration} completeTasks={completeTasks}
                                quantityTasks={quantityTasks}
                                handleSubmit={handleSubmit} result_test={result}
                                stopVoid={stopTest}/>

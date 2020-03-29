@@ -1,1 +1,1 @@
-export { default } from './TimerCard'
+export { default } from './TimerCard2'

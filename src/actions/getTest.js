@@ -10,8 +10,10 @@ export function getTest(id) {
     }
 }
 
-export function checkTest(answers) {
+export function checkTest(id_user, id_test, answers) {
     return dispatch => {
-        return axios.post('/api/check_test', answers)
+        return axios.post('/api/check_test', {
+            id_user: id_user, id_test: id_test, answers
+        })
     }
 }

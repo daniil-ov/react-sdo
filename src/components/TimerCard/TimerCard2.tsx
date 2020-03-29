@@ -12,19 +12,20 @@ type TimerCard = {
     initial_time: number
 }
 
-const TimerCard: FC<TimerCard> = ({initial_time, durationTimer, completeTasks, quantityTasks, handleSubmit, result_test, stopVoid}) => {
+const TimerCard2: FC<TimerCard> = ({initial_time, durationTimer, completeTasks, quantityTasks, handleSubmit, result_test, stopVoid}) => {
 
-    const [init_time, setInit_time] = useState(initial_time);
+    // const [init_time, setInit_time] = useState(initial_time);
     const [currentTime, setCurrentTime] = useState(initial_time);
     const [stopWatch, setStopWatch] = useState('00:00:00');
     const [timer, setTimer] = useState('00:00:00');
     const [duration_test, setDuration_test] = useState(durationTimer);
-    let initialTime = init_time;
+    const [play, setPlay] = useState(0);
+    let initialTime = initial_time;
+    let idSetInterval: NodeJS.Timeout;
+
 
     useEffect(() => {
-        setInit_time(initial_time);
         setCurrentTime(initial_time);
-        initialTime = init_time;
     }, [initial_time]);
 
     useEffect(() => {
@@ -32,20 +33,26 @@ const TimerCard: FC<TimerCard> = ({initial_time, durationTimer, completeTasks, q
     }, [durationTimer]);
 
     useEffect(() => {
-        if (durationTimer !== 0 && initialTime !== -1) {
-            setInterval(tick, 1000);
+
+        if (duration_test !== 0 && currentTime != -1 && play === 0) {
+            idSetInterval = setInterval(tick, 1000);
+            setPlay(1);
         }
-    }, [duration_test, initial_time]);
+    }, [duration_test, currentTime]);
 
     function tick() {
         initialTime++;
+
         setCurrentTime(initialTime);
+
 
         setStopWatch(viewTime(initialTime));
         setTimer(viewTime(duration_test - initialTime));
 
-        if (initialTime >= duration_test) {
+
+        if (initialTime >= duration_test || result_test !== null) {
             stopVoid();
+            clearInterval(idSetInterval);
             setStopWatch(viewTime(duration_test));
             setTimer("Время истекло");
         }
@@ -90,4 +97,4 @@ const TimerCard: FC<TimerCard> = ({initial_time, durationTimer, completeTasks, q
 
 };
 
-export default TimerCard;
+export default TimerCard2;
