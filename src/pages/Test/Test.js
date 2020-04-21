@@ -36,17 +36,18 @@ const Test = () => {
             setQuantityTasks(res.data.problems.split('|').length);
             res.data.problems.split("|").map((id) => answers["answer_" + id] = '');
         });
+        dispatch(addStat(id_user, id_test, answers)).then(res => {
+            setInitial_time(res.data.second_passed);
+            //setAnswers(res.data.answers);
+            //setAnswers(answers => ({...answers, ...answers}));
+        });
     }, []);
 
     useEffect(() => {
         dispatch(addStat(id_user, id_test, answers)).then(res => {
             setInitial_time(res.data.second_passed);
-            //setAnswers(JSON.parse(res.data.answers));
-            console.log(res.data.answers, 'answers')
-            /*setTasks(res.data.problems);
-            setDuration(res.data.duration);
-            setQuantityTasks(res.data.problems.split('|').length);
-            res.data.problems.split("|").map((id) => answers["answer_" + id] = '');*/
+            //setAnswers(res.data.answers);
+            console.log(res.data.answers, 'answers');
         });
     }, [answers]);
 
@@ -86,6 +87,8 @@ const Test = () => {
         } else {
             setErrors({})
         }
+        console.log(answers, 'answers')
+        console.log(isValid, 'isValid')
 
         return isValid;
     };

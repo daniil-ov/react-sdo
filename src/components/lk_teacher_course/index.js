@@ -1,0 +1,1 @@
+export { default } from "./lk_teacher_course";

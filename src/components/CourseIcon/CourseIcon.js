@@ -5,6 +5,7 @@ import {getProblem} from "../../actions/getProblem";
 import classnames from "classnames";
 
 import './CourseIcon.scss'
+import {Link} from "react-router-dom";
 
 
 const CourseIcon = ({name_course, description, id, href, img}) => {
@@ -27,10 +28,10 @@ const CourseIcon = ({name_course, description, id, href, img}) => {
         <div className={"CourseIcon"}>
 
             <div className="card mb-3">
-                <a href={href}>
+                <Link to={href}>
                     <img
                         src={img}/>
-                </a>
+                </Link>
                 <div className="card-body">
                     <h5 className="card-title">{name_course}</h5>
                     <p className="card-text">{description}</p>

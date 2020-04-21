@@ -4527,6 +4527,7 @@ input[type="button"].btn-block {
 
 .nav-link:hover, .nav-link:focus {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-link.disabled {
@@ -4620,6 +4621,7 @@ input[type="button"].btn-block {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 0.5rem 1rem;
+  margin-bottom: 10px;
 }
 
 .navbar .container,

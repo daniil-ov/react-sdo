@@ -12,6 +12,9 @@ import requireAuth from "../util/requireAuth";
 import './bootstrap.css';
 import Task from "./Task";
 import Test from "../pages/Test";
+import Course from "./Course";
+import Theory from "./Theory";
+import Lk from "./Lk";
 
 class App extends React.Component {
 
@@ -26,11 +29,20 @@ class App extends React.Component {
                             <Route exact path="/" component={Main}/>
                             <Route path="/signup" component={SignupPage}/>
                             <Route path="/login" component={LoginPage}/>
+                            <Route path="/lk/:action">
+                                <Lk/>
+                            </Route>
                             <Route path="/task/:id_task">
                                 <Task />
                             </Route>
                             <Route path="/test/:id_test">
                                 <Test />
+                            </Route>
+                            <Route path="/course/:id_course">
+                                <Course />
+                            </Route>
+                            <Route path="/theory/:id_theory">
+                                <Theory />
                             </Route>
                             <Route path="/new-event" component={requireAuth(NewEventPage)}/>
                         </Switch>

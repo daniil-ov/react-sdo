@@ -1,0 +1,16 @@
+.Module{
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.5rem;
+  padding: 30px;
+  margin-bottom: 10px;
+}
+.theory_test_link{
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+
+.theory_item{
+  padding: 10px;
+}

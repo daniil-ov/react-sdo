@@ -1,22 +1,37 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import {logout} from '../actions/authActions';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav'
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 class NavigationBar extends React.Component {
     logout(e) {
         e.preventDefault();
         this.props.logout();
     }
+
     render() {
         const {isAuthenticated} = this.props.auth;
 
+
         const userLinks = (
+
+
             <Nav>
-                <Nav.Link href="#" onClick={this.logout.bind(this)}>Выйти</Nav.Link>
+                <NavDropdown
+                    title={this.props.auth.user.third_name + " "
+                    + this.props.auth.user.name + " "
+                    + this.props.auth.user.second_name}
+                    id="basic-nav-dropdown">
+                    <NavDropdown.Item href={"/lk/my"}>Личный кабинет</NavDropdown.Item>
+                    <NavDropdown.Divider/>
+                    <NavDropdown.Item href="#" onClick={this.logout.bind(this)}>Выйти</NavDropdown.Item>
+                </NavDropdown>
+
+
             </Nav>
 
 
@@ -31,8 +46,8 @@ class NavigationBar extends React.Component {
 
         return (
             <Navbar bg="light" variant="light">
-                <Navbar.Brand href="/">SUT SDO</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Brand href={"/"}>SUT SDO</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
 
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
