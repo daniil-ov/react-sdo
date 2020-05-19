@@ -2,7 +2,7 @@ import React from 'react';
 import NavigationBar from './NavigationBar'
 import Greetings from "./Blog";
 import Main from "./Main";
-import { Router, Switch, Route} from "react-router-dom";
+import { Router, Switch, Route, Redirect} from "react-router-dom";
 import SignupPage from './signupPage/SignupPage'
 import history from '../history'
 import FlashMessagesList from './flash/FlashMessagesList'
@@ -15,6 +15,7 @@ import Test from "../pages/Test";
 import Course from "./Course";
 import Theory from "./Theory";
 import Lk from "./Lk";
+import EditCourse from "./EditCourse";
 
 class App extends React.Component {
 
@@ -32,6 +33,8 @@ class App extends React.Component {
                             <Route path="/lk/:action">
                                 <Lk/>
                             </Route>
+                            <Route path={'/course_edit/:id_course/:action'} component={EditCourse}/>
+                            <Redirect from="/course_edit/:id_course" to="/course_edit/:id_course/edit_module" />
                             <Route path="/task/:id_task">
                                 <Task />
                             </Route>

@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import './Course.scss'
 import Module from "../Module";
-import {getCourse} from "../../actions/getCourse";
+import {course} from "../../actions/Course";
 import {useDispatch} from "react-redux";
 import {getTest} from "../../actions/getTest";
 import Task from "../Task";
