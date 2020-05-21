@@ -9,8 +9,6 @@ import ModalWindowNewCourse from "./ModalWindowNewCourse";
 
 const Lk_teacher_course = ({}) => {
 
-
-
     const dispatch = useDispatch();
     const id_owner = useSelector(state => state.auth.user.id);
     const [course, setCourse] = useState(null);

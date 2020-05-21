@@ -1,6 +1,5 @@
 import React from 'react';
 import NavigationBar from './NavigationBar'
-import Greetings from "./Blog";
 import Main from "./Main";
 import { Router, Switch, Route, Redirect} from "react-router-dom";
 import SignupPage from './signupPage/SignupPage'

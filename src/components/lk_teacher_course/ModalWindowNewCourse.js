@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {add_course} from "../../actions/Course";
 import {useHistory} from "react-router";
 import validateInput from "../../shared/validations/check_empty_input";
+import BtnSaveOrExit from "../Btns/SaveOrExit";
 
 const ModalWindowNewCourse = ({new_course, set_new_course}) => {
 
@@ -33,7 +34,6 @@ const ModalWindowNewCourse = ({new_course, set_new_course}) => {
         } else {
             set_errors(valid.errors);
         }
-
     }
 
 
@@ -60,14 +60,13 @@ const ModalWindowNewCourse = ({new_course, set_new_course}) => {
                         <TextFieldGroup label={'Название курса'} onChange={handleChange} field={'name_course'}
                                         value={input_new_course['name_course']} error={input_errors.name_course}/>
                         <TextFieldGroup label={'Описание курса'} onChange={handleChange} field={'description_course'}
-                                        value={input_new_course['description_course']} error={input_errors.description_course}/>
+                                        value={input_new_course['description_course']}
+                                        error={input_errors.description_course}/>
 
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal"
-                                onClick={() => set_new_course(false)}>Отмена
-                        </button>
-                        <button type="button" className="btn btn-primary" onClick={() => create_course()}>Создать</button>
+                        <BtnSaveOrExit closeAction={() => set_new_course(false)} closeNameBtn={'Отмена'}
+                                       SaveAction={() => create_course()} SaveNameBtn={'Создать'}/>
                     </div>
                 </div>
             </div>
