@@ -1,0 +1,1 @@
+export { default } from "./gen_test";

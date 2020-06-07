@@ -6,7 +6,7 @@ import {course} from "../../actions/Course";
 import {useDispatch} from "react-redux";
 import {getTest} from "../../actions/getTest";
 import Task from "../Task";
-import {getTheory} from "../../actions/getTheory";
+import {theory} from "../../actions/Theory";
 
 const Theory = () => {
     let {id_theory} = useParams();
@@ -15,7 +15,7 @@ const Theory = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getTheory(id_theory)).then(res => {
+        dispatch(theory(id_theory)).then(res => {
             console.log(res.data);
             set_theory_data(res.data);
         });
@@ -27,9 +27,7 @@ const Theory = () => {
         <div className={"Theory"}>
             <h2>Теория {id_theory}</h2>
             <div className={"Theory-Content"}>
-                {theory_data && <div className="content" dangerouslySetInnerHTML={{__html: theory_data.body}}></div>}
-
-
+                {theory_data && <div className="content" dangerouslySetInnerHTML={{__html: theory_data.body}}/>}
             </div>
         </div>
     );

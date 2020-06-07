@@ -15,6 +15,8 @@ import Course from "./Course";
 import Theory from "./Theory";
 import Lk from "./Lk";
 import EditCourse from "./EditCourse";
+import TheoryEdit from "./TheoryEdit";
+import ViewProblemsTheory from "./Bank_tasks/ViewProblemsTheory";
 
 class App extends React.Component {
 
@@ -32,6 +34,7 @@ class App extends React.Component {
                             <Route path="/lk/:action">
                                 <Lk/>
                             </Route>
+                            <Route path={'/course_edit/:id_course/bank_tasks/:id_theory'} component={ViewProblemsTheory}/>
                             <Route path={'/course_edit/:id_course/:action'} component={EditCourse}/>
                             <Redirect from="/course_edit/:id_course" to="/course_edit/:id_course/edit_module" />
                             <Route path="/task/:id_task">
@@ -45,6 +48,9 @@ class App extends React.Component {
                             </Route>
                             <Route path="/theory/:id_theory">
                                 <Theory />
+                            </Route>
+                            <Route path="/theory_edit/:id_theory">
+                                <TheoryEdit/>
                             </Route>
                             <Route path="/new-event" component={requireAuth(NewEventPage)}/>
                         </Switch>

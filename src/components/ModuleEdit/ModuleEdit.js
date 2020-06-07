@@ -25,7 +25,7 @@ const ModuleEdit = ({id_course}) => {
         <div className={"ModuleEdit"}>
             <h4>Курс {id_course}.</h4>
             {course_data && Object.keys(course_data.modules).map((key, index) =>
-                <ModuleView num_mod={index + 1} id_module={key} id_course={id_course}
+                <ModuleView key={key} num_mod={index + 1} id_module={key} id_course={id_course}
                             name_module={course_data.modules[key].name}
                             description_module={course_data.modules[key].description}
                             order={course_data.modules[key].order}

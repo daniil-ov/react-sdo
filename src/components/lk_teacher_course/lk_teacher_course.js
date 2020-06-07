@@ -19,8 +19,6 @@ const Lk_teacher_course = ({}) => {
         dispatch(getCourseOwner(id_owner)).then(res => {
             setCourse(res.data);
         });
-
-
     }, []);
 
     return (
@@ -29,7 +27,7 @@ const Lk_teacher_course = ({}) => {
             <div className={"Lk_teacher_course"} style={{'zIndex': '100'}}>
 
                 {course &&
-                <UniversalTable NameTable={'Мои курсы'} Columns={['ID курса', 'Название курса', 'Статус курса']}
+                <UniversalTable NameTable={'Мои курсы'} Columns={['ID курса', 'Опубликован', 'Название курса', 'Статус курса']}
                                 Rows={course['courses']} path={'course_edit'} hrefs={Object.keys(course.courses)}/>}
                 <button type="submit" onClick={() => set_new_course(true)} className="btn btn-primary btn-block">Создать
                     новый курс

@@ -19,6 +19,7 @@ const ListTheory = ({list_theory}) => {
 
                 </div>
             )}
+
         </div>
     );
 }
