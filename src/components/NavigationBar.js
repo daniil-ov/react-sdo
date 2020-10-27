@@ -26,7 +26,7 @@ class NavigationBar extends React.Component {
                     + this.props.auth.user.name + " "
                     + this.props.auth.user.second_name}
                     id="basic-nav-dropdown">
-                    <NavDropdown.Item href={"/lk/my"}>Личный кабинет</NavDropdown.Item>
+                    <NavDropdown.Item href={"/lk/teacher_course"}>Личный кабинет</NavDropdown.Item>
                     <NavDropdown.Divider/>
                     <NavDropdown.Item href="#" onClick={this.logout.bind(this)}>Выйти</NavDropdown.Item>
                 </NavDropdown>
